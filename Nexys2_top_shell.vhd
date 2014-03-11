@@ -81,6 +81,7 @@ architecture Behavioral of Nexys2_top_shell is
 		);
 	END COMPONENT;
 
+
 -------------------------------------------------------------------------------------
 --Below are declarations for signals that wire-up this top-level module.
 -------------------------------------------------------------------------------------
@@ -95,11 +96,29 @@ signal ClockBus_sig : STD_LOGIC_VECTOR (26 downto 0);
 --------------------------------------------------------------------------------------
 
 
+-- VHDL Instantiation Created from source file MooreElevatorController_Shell.vhd -- 13:54:14 03/11/2014
+--
+-- Notes: 
+-- 1) This instantiation template has been automatically generated using types
+-- std_logic and std_logic_vector for the ports of the instantiated module
+-- 2) To use this template to instantiate this entity, cut-and-paste and then edit
+
+	COMPONENT MooreElevatorController_Shell
+	PORT(
+		clk : IN std_logic;
+		reset : IN std_logic;
+		stop : IN std_logic;
+		up_down : IN std_logic;          
+		floor : OUT std_logic_vector(3 downto 0)
+		);
+	END COMPONENT;
+
 
 --------------------------------------------------------------------------------------
 --Insert any required signal declarations below
 --------------------------------------------------------------------------------------
-
+  
+  --i don't think i need anything here yet.
 
 
 begin
@@ -127,10 +146,10 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 --		  Example: if you are not using 7-seg display #3 set nibble3 to "0000"
 --------------------------------------------------------------------------------------
 
-nibble0 <= 
-nibble1 <= 
-nibble2 <= 
-nibble3 <= 
+--nibble0 <= 
+nibble1 <= "0000";
+nibble2 <= "0000";
+nibble3 <= "0000";
 
 --This code converts a nibble to a value that can be displayed on 7-segment display #0
 	sseg0: nibble_to_sseg PORT MAP(
@@ -174,6 +193,13 @@ nibble3 <=
 --Instantiate the design you with to implement below and start wiring it up!:
 -----------------------------------------------------------------------------
 
+	Inst_MooreElevatorController_Shell: MooreElevatorController_Shell PORT MAP(
+		clk => clk_50m,
+		reset => '0',
+		stop => btn(1),
+		up_down => btn(0),
+		floor => nibble0
+	);
 
 end Behavioral;
 
