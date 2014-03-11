@@ -119,7 +119,7 @@ signal ClockBus_sig : STD_LOGIC_VECTOR (26 downto 0);
 --------------------------------------------------------------------------------------
   
   --i don't think i need anything here yet.
-
+	
 
 begin
 
@@ -194,7 +194,7 @@ nibble3 <= "0000";
 -----------------------------------------------------------------------------
 
 	Inst_MooreElevatorController_Shell: MooreElevatorController_Shell PORT MAP(
-		clk => clk_50m,
+		clk => ClockBus_sig(26),
 		reset => '0',
 		stop => btn(1),
 		up_down => btn(0),
