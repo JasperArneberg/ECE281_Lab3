@@ -22,7 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
 --library UNISIM;
---use UNISIM.VComponents.all;
+--use UNISIM.VComponents.all; 
 
 entity Nexys2_top_shell is
     Port ( 	clk_50m : in STD_LOGIC;
@@ -102,16 +102,15 @@ signal ClockBus_sig : STD_LOGIC_VECTOR (26 downto 0);
 -- std_logic and std_logic_vector for the ports of the instantiated module
 ---- 2) To use this template to instantiate this entity, cut-and-paste and then edit
 --
---	COMPONENT MooreElevatorController_Shell
---	PORT(
---		clk : IN std_logic;
---		reset : IN std_logic;
---		stop : IN std_logic;
---		up_down : IN std_logic;          
---		floor : OUT std_logic_vector(3 downto 0)
---		);
---	END COMPONENT;
---
+	COMPONENT MooreElevatorController_Shell
+	PORT(
+		clk : IN std_logic;
+		reset : IN std_logic;
+		input : IN std_logic_vector(3 downto 0);       
+		floor : OUT std_logic_vector(3 downto 0)
+		);
+	END COMPONENT;
+
 --
 ---- VHDL Instantiation Created from source file MealyElevatorController_Shell.vhd -- 13:38:47 03/13/2014
 ----
@@ -133,16 +132,16 @@ signal ClockBus_sig : STD_LOGIC_VECTOR (26 downto 0);
 
 
 
-	COMPONENT MoorePrimeNumbers
-	PORT(
-		clk : IN std_logic;
-		reset : IN std_logic;
-		stop : IN std_logic;
-		up_down : IN std_logic;          
-		floorTens : OUT std_logic_vector(3 downto 0);
-		floorOnes: OUT std_logic_vector(3 downto 0)
-		);
-	END COMPONENT;
+--	COMPONENT MoorePrimeNumbers
+--	PORT(
+--		clk : IN std_logic;
+--		reset : IN std_logic;
+--		stop : IN std_logic;
+--		up_down : IN std_logic;          
+--		floorTens : OUT std_logic_vector(3 downto 0);
+--		floorOnes: OUT std_logic_vector(3 downto 0)
+--		);
+--	END COMPONENT;
 
 
 
@@ -180,9 +179,9 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 --------------------------------------------------------------------------------------
 
 --nibble0 <= 
---nibble1 <= "0000";
+nibble1 <= "0000";
 nibble2 <= "0000";
-nibble3 <= "1100";
+nibble3 <= "0000";
 
 --This code converts a nibble to a value that can be displayed on 7-segment display #0
 	sseg0: nibble_to_sseg PORT MAP(
@@ -226,14 +225,24 @@ nibble3 <= "1100";
 --Instantiate the design you with to implement below and start wiring it up!:
 -----------------------------------------------------------------------------
 
-	Inst_MoorePrimeNumbers: MoorePrimeNumbers PORT MAP(
+	Inst_MooreElevatorController_Shell: MooreElevatorController_Shell PORT MAP(
 		clk => ClockBus_sig(25),
 		reset => btn(3),
-		stop => btn(1),
-		up_down => btn(0),
-		floorTens => nibble1,
-		floorOnes => nibble0
+		input(3) => switch(3),
+		input(2) => switch(2),
+		input(1) => switch(1),
+		input(0) => switch(0),
+		floor => nibble0
 	);
+
+--	Inst_MoorePrimeNumbers: MoorePrimeNumbers PORT MAP(
+--		clk => ClockBus_sig(25),
+--		reset => btn(3),
+--		stop => btn(1),
+--		up_down => btn(0),
+--		floorTens => nibble1,
+--		floorOnes => nibble0
+--	);
 
 --	Inst_MealyElevatorController_Shell: MealyElevatorController_Shell PORT MAP(
 --		clk => ClockBus_sig(26),
@@ -245,4 +254,4 @@ nibble3 <= "1100";
 --	);
 
 end Behavioral;
-
+ 
