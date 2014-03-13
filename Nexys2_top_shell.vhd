@@ -96,20 +96,22 @@ signal ClockBus_sig : STD_LOGIC_VECTOR (26 downto 0);
 --------------------------------------------------------------------------------------
 
 
--- VHDL Instantiation Created from source file MooreElevatorController_Shell.vhd -- 13:54:14 03/11/2014
+
+-- VHDL Instantiation Created from source file MealyElevatorController_Shell.vhd -- 13:38:47 03/13/2014
 --
 -- Notes: 
 -- 1) This instantiation template has been automatically generated using types
 -- std_logic and std_logic_vector for the ports of the instantiated module
 -- 2) To use this template to instantiate this entity, cut-and-paste and then edit
 
-	COMPONENT MooreElevatorController_Shell
+	COMPONENT MealyElevatorController_Shell
 	PORT(
 		clk : IN std_logic;
 		reset : IN std_logic;
 		stop : IN std_logic;
 		up_down : IN std_logic;          
-		floor : OUT std_logic_vector(3 downto 0)
+		floor : OUT std_logic_vector(3 downto 0);
+		nextfloor : OUT std_logic_vector(3 downto 0)
 		);
 	END COMPONENT;
 
@@ -149,7 +151,7 @@ LED <= CLOCKBUS_SIG(26 DOWNTO 19);
 --nibble0 <= 
 nibble1 <= "0000";
 nibble2 <= "0000";
-nibble3 <= "0000";
+--nibble3 <= "0000";
 
 --This code converts a nibble to a value that can be displayed on 7-segment display #0
 	sseg0: nibble_to_sseg PORT MAP(
@@ -193,12 +195,13 @@ nibble3 <= "0000";
 --Instantiate the design you with to implement below and start wiring it up!:
 -----------------------------------------------------------------------------
 
-	Inst_MooreElevatorController_Shell: MooreElevatorController_Shell PORT MAP(
+	Inst_MealyElevatorController_Shell: MealyElevatorController_Shell PORT MAP(
 		clk => ClockBus_sig(26),
-		reset => '0',
+		reset =>btn(3),
 		stop => btn(1),
 		up_down => btn(0),
-		floor => nibble0
+		floor => nibble0,
+		nextfloor => nibble3 
 	);
 
 end Behavioral;
