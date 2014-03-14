@@ -24,6 +24,8 @@ entity MooreElevatorController_Shell is
     Port ( clk : in  STD_LOGIC;
            reset : in  STD_LOGIC;
            input : in  STD_LOGIC_VECTOR (3 downto 0);
+			  direction : out STD_LOGIC;
+			  movement : out STD_LOGIC;
            floor : out  STD_LOGIC_VECTOR (3 downto 0));
 end MooreElevatorController_Shell; 
 
@@ -172,6 +174,10 @@ floor_sig <= "0001" when (floor_state = floor1) else
 					"0000";
 					
 floor <= floor_sig;
+
+direction <= up_down; --ouput the directions <= stop;
+
+movement <= not stop;
 
 end Behavioral;
 
