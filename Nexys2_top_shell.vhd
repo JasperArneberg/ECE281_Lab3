@@ -7,8 +7,6 @@
 -- Target Devices: Nexys2 Project Board
 -- Tool versions: 
 -- Description: This file is a shell for implementing designs on a NEXYS 2 board.
--- The first version was created by Capt Silva. This version is created by Jasper
--- Arneberg.
 -- 
 --
 ----------------------------------------------------------------------------------
@@ -89,8 +87,6 @@ architecture Behavioral of Nexys2_top_shell is
 signal nibble0, nibble1, nibble2, nibble3 : std_logic_vector(3 downto 0);
 signal sseg0_sig, sseg1_sig, sseg2_sig, sseg3_sig : std_logic_vector(7 downto 0);
 signal ClockBus_sig : STD_LOGIC_VECTOR (26 downto 0);
-signal the_direction : STD_LOGIC;
-signal the_movement : STD_LOGIC;
 
 
 --------------------------------------------------------------------------------------
@@ -104,27 +100,26 @@ signal the_movement : STD_LOGIC;
 -- std_logic and std_logic_vector for the ports of the instantiated module
 ---- 2) To use this template to instantiate this entity, cut-and-paste and then edit
 --
-	COMPONENT MooreElevatorController_Shell
+	COMPONENT MooreElevatorController_Shell 
 	PORT(
-		clk : IN std_logic;
 		reset : IN std_logic;
 		input : IN std_logic_vector(3 downto 0); 
-		direction : OUT std_logic;
-		movement : OUT std_logic;
+		clockbus : IN std_logic_vector(26 downto 0);
+		light_display : OUT std_logic_vector(7 downto 0);
 		floor : OUT std_logic_vector(3 downto 0)
 		);
 	END COMPONENT;
 	
 	
-	COMPONENT light_indicator
-	PORT(
-		clk : in  STD_LOGIC;
-		left_right : IN std_logic;
-		motion : IN std_logic;
-		clockbus : IN std_logic_vector(26 downto 0);          
-		light_display : OUT std_logic_vector(7 downto 0)
-		);
-	END COMPONENT;
+--	COMPONENT light_indicator
+--	PORT(
+--		clk : in  STD_LOGIC;
+--		left_right : IN std_logic;
+--		motion : IN std_logic;
+--		clockbus : IN std_logic_vector(26 downto 0);          
+--		light_display : OUT std_logic_vector(7 downto 0)
+--		);
+--	END COMPONENT;
 
 --
 ---- VHDL Instantiation Created from source file MealyElevatorController_Shell.vhd -- 13:38:47 03/13/2014
@@ -250,24 +245,23 @@ nibble3 <= "0000";
 -----------------------------------------------------------------------------
 
 	Inst_MooreElevatorController_Shell: MooreElevatorController_Shell PORT MAP(
-		clk => ClockBus_sig(25),
 		reset => btn(3),
+		clockbus => ClockBus_sig(26 downto 0),
 		input(3) => switch(3),
 		input(2) => switch(2),
 		input(1) => switch(1),
 		input(0) => switch(0),
-		movement => the_movement,
-		direction => the_direction,
+		light_display => LED(7 downto 0),
 		floor => nibble0
 	);
 	
-	Inst_light_indicator: light_indicator PORT MAP(
-		clk => clk_50m,
-		left_right => the_direction,
-		motion => the_movement,
-		clockbus => ClockBus_sig,
-		light_display => LED
-	);
+--	Inst_light_indicator: light_indicator PORT MAP(
+--		clk => clk_50m,
+--		left_right => the_direction,
+--		motion => the_movement,
+--		clockbus => ClockBus_sig,
+--		light_display => LED
+--	);
 
 
 --	Inst_MoorePrimeNumbers: MoorePrimeNumbers PORT MAP(

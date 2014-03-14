@@ -21,11 +21,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity MooreElevatorController_Shell is
-    Port ( clk : in  STD_LOGIC;
-           reset : in  STD_LOGIC;
+    Port ( reset : in  STD_LOGIC;
            input : in  STD_LOGIC_VECTOR (3 downto 0);
-			  direction : out STD_LOGIC;
-			  movement : out STD_LOGIC;
+			  clockbus : in STD_LOGIC_VECTOR (26 downto 0);
+			  light_display : out STD_LOGIC_VECTOR ( 7 downto 0);
            floor : out  STD_LOGIC_VECTOR (3 downto 0));
 end MooreElevatorController_Shell; 
 
@@ -42,17 +41,18 @@ signal floor_state : floor_state_type;
 signal stop : STD_LOGIC;
 signal up_down : STD_LOGIC;
 signal floor_sig : STD_LOGIC_VECTOR (3 downto 0); --experimental, try to use values in calculations
+signal clk : STD_LOGIC;
 
 begin
 ---------------------------------------------
 --Below you will code your next-state process
 ---------------------------------------------
-
+clk <= clockbus(25);
 
 --This line will set up a process that is sensitive to the clock
 floor_state_machine: process(clk)
 begin
-
+	
 	if (input > floor_sig) then
 		up_down <= '1';
 		stop <= '0';
@@ -158,6 +158,38 @@ begin
 			end case;
 		end if;
 	end if;
+	
+	if (stop = '1' or floor_state = floor1 or floor_state = floor8) then
+		light_display(7) <= '1';
+		light_display(6) <= '1';
+		light_display(5) <= '1';
+		light_display(4) <= '1';
+		light_display(3) <= '1';
+		light_display(2) <= '1';
+		light_display(1) <= '1';
+		light_display(0) <= '1';
+	else
+		if up_down = '1'  then
+			light_display(7) <= clockbus(22);
+			light_display(6) <= clockbus(22);
+			light_display(5) <= clockbus(22);
+			light_display(4) <= clockbus(22);
+			light_display(3) <= clockbus(22);
+			light_display(2) <= clockbus(22);
+			light_display(1) <= clockbus(22);
+			light_display(0) <= clockbus(22);
+		else
+			light_display(7) <= clockbus(25);
+			light_display(6) <= clockbus(25);
+			light_display(5) <= clockbus(25);
+			light_display(4) <= clockbus(25);
+			light_display(3) <= clockbus(25);
+			light_display(2) <= clockbus(25);
+			light_display(1) <= clockbus(25);
+			light_display(0) <= clockbus(25);
+		end if;
+	end if;
+	
 end process;
 
 
@@ -174,10 +206,6 @@ floor_sig <= "0001" when (floor_state = floor1) else
 					"0000";
 					
 floor <= floor_sig;
-
-direction <= up_down; --ouput the directions <= stop;
-
-movement <= not stop;
 
 end Behavioral;
 
