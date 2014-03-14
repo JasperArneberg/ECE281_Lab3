@@ -29,7 +29,10 @@ Her
 Throug
 
 ### Demonstrations
-I demonstrated basic functionality of the Moore Elevator Controller on 13 March 2014 at 1330.
+I demonstrated basic functionality of the Moore Elevator Controller to Dr. Neebel on 13 March 2014 at 1330.
+I demonstrated basic functionality of Mealy Elevator Controllor to C3C El-Saawy on 13 March 2014 at 1400.
+I demonstrated prime number functionality to Dr. Neebel on 13 March 2014 at 1430.
+I demonstrated switch input functionality to Dr. Neebel 13 March 2014 at 1530,
 
 ## Documentation
 C3C El-Saawy helped me.
