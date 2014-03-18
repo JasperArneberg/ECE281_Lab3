@@ -43,11 +43,15 @@ This module is improved because it takes in 27 different clocks. These clocks ca
 
 
 ### Demonstrations
-I demonstrated basic functionality of the Moore Elevator Controller to Dr. Neebel on 13 March 2014 at 1330.
-I demonstrated basic functionality of Mealy Elevator Controllor to C3C El-Saawy on 13 March 2014 at 1400.
-I demonstrated prime number functionality to Dr. Neebel on 13 March 2014 at 1430.
-I demonstrated switch input functionality to Dr. Neebel 13 March 2014 at 1530.
-I demonstrated light indicator functionality to...
+| Functionality | Witness | Date | Time |
+| :--: | :--: | :--: | :----: |
+| Moore basic | Dr. Neebel | 13 MAR 14 | 1330 |
+| Mealy basic | C3C El-Saawy | 13 MAR 14 | 1400 |
+| Prime number | Dr. Neebel | 13 MAR 14 | 1430 |
+| Switch input | Dr. Neebel | 13 MAR 14 | 1530 |
+| Light Indicator | Dr. Neebel | 18 MAR 14 | ??? |
+
+
 
 ## Documentation
 C3C El-Saawy guided me get started using all of the modules together. I periodically asked him questions while in class.
