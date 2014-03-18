@@ -41,6 +41,45 @@ end MooreElevatorController_Shell;
 
 This module is improved because it takes in 27 different clocks. These clocks can then be used in different parts of the design.
 
+#### Bad Code
+```
+floor_state_machine: process(clk)
+begin
+	if clk'event and clk='1' then
+		if reset='1' then
+			floor_state <= floor1;
+		--next state logic
+		else
+			case floor_state is
+```
+
+This code is bad because the next state logic is intertwined with the register process of mapping the nextstate to the state.
+
+#### Good Code
+```
+--registry process
+floor_state_machine: process(clockbus(26))
+begin
+	if clk'event and clk='1' then
+		if reset='1' then
+			floor_state <= floor1;
+		else
+		    floor_state <= next_floor;
+		end if;
+	end if;
+end process;
+
+--next state logic
+process(up_down, stop)
+begin
+    case next_floor is
+        when floor1 => ...
+
+```
+
+This code is better because it splits up the next state logic from the registry process. The next state logic has no reliance on the clock in this case, which makes things cleaner and easier to analyze.
+
+
 
 ### Demonstrations
 | Functionality | Witness | Date | Time |
